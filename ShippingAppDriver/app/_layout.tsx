@@ -17,6 +17,17 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+
+        <Stack.Screen name="driverLogin" options={{ headerShown: false }} />
+
+        <Stack.Screen name="registers/driverRegisterStep1" options={{ headerShown: false }} />
+        <Stack.Screen name="registers/driverRegisterStep2" options={{ headerShown: false }} />
+        <Stack.Screen name="registers/driverRegisterStep3" options={{ headerShown: false }} />
+        <Stack.Screen name="registers/driverRegisterStep4" options={{ headerShown: false }} />
+
+        <Stack.Screen name="profiles/driverProfile" options={{ headerShown: false }} />
+        
+
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
