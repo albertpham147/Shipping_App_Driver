@@ -31,6 +31,7 @@ export default function DriverRegistrationStep3Screen() {
         console.log('Take photo');
         // Handle camera launch
         // You would use react-native-camera or expo-camera here
+        router.push('/registers/driverRegisterStep4');
     };
 
     return (

@@ -15,22 +15,22 @@ export default function HomeScreen() {
     <SafeAreaView>
       <View>
         <Pressable onPress={() => {router.push('/driverLogin')}}>
-          <Text style ={{color:'white'}}>login</Text>
+          <Text style ={{color:'black'}}>login</Text>
         </Pressable>
         <Pressable onPress={() => {router.push('/registers/driverRegisterStep1')}}>
-          <Text style ={{color:'white'}}>register step 1</Text>
+          <Text style ={{color:'black'}}>register step 1</Text>
         </Pressable>
         <Pressable onPress={() => {router.push('/registers/driverRegisterStep2')}}>
-          <Text style ={{color:'white'}}>register step 2</Text>
+          <Text style ={{color:'black'}}>register step 2</Text>
         </Pressable>
         <Pressable onPress={() => {router.push('/registers/driverRegisterStep3')}}>
-          <Text style ={{color:'white'}}>register step 3</Text>
+          <Text style ={{color:'black'}}>register step 3</Text>
         </Pressable>
         <Pressable onPress={() => {router.push('/registers/driverRegisterStep4')}}>
-          <Text style ={{color:'white'}}>register step 4</Text>
+          <Text style ={{color:'black'}}>register step 4</Text>
         </Pressable>
         <Pressable onPress={() => {router.push('/profiles/driverProfile')}}>
-          <Text style ={{color:'white'}}>profile</Text>
+          <Text style ={{color:'black'}}>profile</Text>
         </Pressable>
       </View>
     </SafeAreaView>

@@ -192,7 +192,7 @@ export default function DriverRegistrationStep2Screen(){
 
             {/* Continue Button */}
             <View style={styles.bottomButtonContainer}>
-                <TouchableOpacity style={styles.continueButton}>
+                <TouchableOpacity style={styles.continueButton} onPress={() => {router.push('/registers/driverRegisterStep3');}}>
                     <Text style={styles.continueButtonText}>Tiếp theo</Text>
                     <FontAwesome name="long-arrow-right" size={24} color="white"/>
                 </TouchableOpacity>

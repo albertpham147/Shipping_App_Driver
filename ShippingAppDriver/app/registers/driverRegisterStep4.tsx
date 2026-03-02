@@ -8,6 +8,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 export default function DriverRegistrationStep4Screen() {
+  const router = useRouter();
   // Steps for the registration process
   const steps = [
     { id: 1, label: 'THÔNG TIN', completed: true },

@@ -200,7 +200,7 @@ export default function DriverInformationRegistration() {
 
             {/* Continue Button */}
             <View style={styles.bottomButtonContainer}>
-                <TouchableOpacity style={styles.continueButton}>
+                <TouchableOpacity style={styles.continueButton} onPress={() => {router.push('/registers/driverRegisterStep2');}}>
                     <Text style={styles.continueButtonText}>Tiếp theo</Text>
                     <AntDesign name="arrow-right" size={20} color="white" />
                 </TouchableOpacity>
