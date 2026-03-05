@@ -1,387 +1,337 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import Entypo from '@expo/vector-icons/Entypo';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { Colors, Spacing, BorderRadius, ButtonHeights } from '../../constants/theme';
 
-export default function DriverRegistrationStep3Screen() {
-    const [currentStep, setCurrentStep] = useState(3);
-    const [photoTaken, setPhotoTaken] = useState(false);
+const REQUIREMENTS = [
+  'Nhìn thẳng vào camera',
+  'Không đeo kính râm hoặc khẩu trang',
+  'Đảm bảo đủ ánh sáng',
+];
 
-    const router = useRouter();
-    // Steps for the registration process
-    const steps = [
-        { id: 1, label: 'THÔNG TIN', completed: true },
-        { id: 2, label: 'GIẤY TỜ', completed: true },
-        { id: 3, label: 'XÁC MINH', active: true },
-        { id: 4, label: 'HOÀN TẤT', completed: false },
-    ];
+export default function DriverRegisterStep3Screen() {
+  const router = useRouter();
 
-    // Photo requirements
-    const photoRequirements = [
-        'Nhìn thẳng vào camera',
-        'Không đeo kính râm hoặc khẩu trang',
-        'Đảm bảo đủ ánh sáng',
-    ];
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <MaterialIcons name="arrow-back" size={24} color={Colors.black} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Đăng ký Tài xế</Text>
+        <View style={styles.backButton} />
+      </View>
 
-    const handleTakePhoto = () => {
-        console.log('Take photo');
-        // Handle camera launch
-        // You would use react-native-camera or expo-camera here
-        router.push('/registers/driverRegisterStep4');
-    };
-
-    return (
-        <SafeAreaView style={styles.container}>
-            {/* Header */}
-            <View style={styles.header}>
-                <TouchableOpacity style={styles.backButton} onPress={() => {router.back();}}>
-                    <MaterialIcons name="keyboard-arrow-left" size={36} color="black"/>
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Đăng ký Tài xế</Text>
-                <View style={styles.headerSpacer} />
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={styles.progressWrap}>
+          <View style={styles.progressLineBg} />
+          <View style={styles.progressLineActive} />
+          <View style={styles.stepRow}>
+            <View style={styles.stepItem}>
+              <View style={[styles.stepCircle, styles.stepCircleActive]}>
+                <AntDesign name="check" size={14} color={Colors.white} />
+              </View>
+              <Text style={styles.stepTextActive}>THÔNG TIN</Text>
             </View>
-
-            {/* Progress Steps */}
-            <View style={styles.stepsContainer}>
-                <View style={styles.stepsLine}>
-                    {steps.map((step, index) => (
-                        <React.Fragment key={step.id}>
-                            <View style={styles.stepWrapper}>
-                                <View style={[
-                                    styles.stepCircle,
-                                    step.completed && styles.stepCircleCompleted,
-                                    step.active && styles.stepCircleActive,
-                                ]}>
-                                    {step.completed ? (
-                                        <AntDesign name="check" size={20} color="white" />
-                                    ) : (
-                                        <Text style={[
-                                            styles.stepNumber,
-                                            step.active && styles.stepNumberActive
-                                        ]}>
-                                            {step.id}
-                                        </Text>
-                                    )}
-                                </View>
-                                <Text style={[
-                                    styles.stepLabel,
-                                    (step.completed || step.active) && styles.stepLabelActive
-                                ]}>
-                                    {step.label}
-                                </Text>
-                            </View>
-
-                            {index < steps.length - 1 && (
-                                <View style={[
-                                    styles.stepConnector,
-                                    step.completed && styles.stepConnectorActive
-                                ]} />
-                            )}
-                        </React.Fragment>
-                    ))}
-                </View>
+            <View style={styles.stepItem}>
+              <View style={[styles.stepCircle, styles.stepCircleActive]}>
+                <AntDesign name="check" size={14} color={Colors.white} />
+              </View>
+              <Text style={styles.stepTextActive}>GIẤY TỜ</Text>
             </View>
-
-            <ScrollView
-                style={styles.content}
-                contentContainerStyle={styles.scrollContent}
-                showsVerticalScrollIndicator={false}
-            >
-                {/* Form Title */}
-                <Text style={styles.formTitle}>Xác minh danh tính</Text>
-                <Text style={styles.formSubtitle}>
-                    Vui lòng chụp ảnh chân dung để xác thực khuôn mặt
-                </Text>
-
-                {/* Camera Circle */}
-                <View style={styles.cameraSection}>
-                    <View style={styles.cameraOuterCircle}>
-                        <View style={styles.cameraInnerCircle}>
-                            <TouchableOpacity
-                                style={styles.cameraButton}
-                                onPress={handleTakePhoto}
-                            >
-                                <Entypo name="camera" size={48} color="black" />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <Text style={styles.cameraLabel}>Chạm để chụp</Text>
-                </View>
-
-                {/* Photo Requirements */}
-                <View style={styles.requirementsContainer}>
-                    <Text style={styles.requirementsTitle}>YÊU CẦU HÌNH ẢNH</Text>
-
-                    {photoRequirements.map((requirement, index) => (
-                        <View key={index} style={styles.requirementItem}>
-                            <View style={styles.requirementCheckmark}>
-                                <Text style={styles.requirementCheckmarkIcon}>✓</Text>
-                            </View>
-                            <Text style={styles.requirementText}>{requirement}</Text>
-                        </View>
-                    ))}
-                </View>
-
-                {/* Help Link */}
-                <View style={styles.helpContainer}>
-                    <Text style={styles.helpText}>Bạn gặp khó khăn khi xác thực?</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.helpLink}>Liên hệ Tổng đài hỗ trợ</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
-
-            {/* Take Photo Button */}
-            <View style={styles.bottomButtonContainer}>
-                <TouchableOpacity
-                    style={styles.takePhotoButton}
-                    onPress={handleTakePhoto}
-                >
-                    <AntDesign name="camera" size={24} color="white" style={styles.takePhotoIcon}/>
-                    <Text style={styles.takePhotoButtonText}>Chụp ảnh</Text>
-                </TouchableOpacity>
+            <View style={styles.stepItem}>
+              <View style={[styles.stepCircle, styles.stepCircleActive, styles.stepCircleCurrent]}>
+                <Text style={styles.stepCircleTextActive}>3</Text>
+              </View>
+              <Text style={styles.stepTextActive}>XÁC MINH</Text>
             </View>
-        </SafeAreaView>
-    );
-};
+            <View style={styles.stepItem}>
+              <View style={styles.stepCircle}>
+                <Text style={styles.stepCircleText}>4</Text>
+              </View>
+              <Text style={styles.stepText}>HOÀN TẤT</Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.formSection}>
+          <Text style={styles.formTitle}>Xác minh danh tính</Text>
+          <Text style={styles.formSubtitle}>Vui lòng chụp ảnh chân dung để xác thực khuôn mặt</Text>
+
+          <View style={styles.cameraArea}>
+            <TouchableOpacity style={styles.cameraRing}>
+              <View style={styles.cameraInner}>
+                <View style={styles.cameraIconWrap}>
+                  <MaterialIcons name="photo-camera" size={48} color="#F2590D" />
+                </View>
+                <Text style={styles.cameraText}>Chạm để chụp</Text>
+              </View>
+              <View style={styles.cameraOverlay} />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.requirementCard}>
+            <Text style={styles.requirementTitle}>YÊU CẦU HÌNH ẢNH</Text>
+            {REQUIREMENTS.map((item) => (
+              <View key={item} style={styles.requirementItem}>
+                <View style={styles.requirementCheck}>
+                  <MaterialIcons name="check-circle" size={17} color="#16A34A" />
+                </View>
+                <Text style={styles.requirementText}>{item}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+
+        <View style={styles.bottomHint}>
+          <Text style={styles.bottomHintText}>Bạn gặp khó khăn khi xác thực?</Text>
+          <TouchableOpacity>
+            <Text style={styles.bottomHintLink}>Liên hệ Tổng đài hỗ trợ</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.takePhotoButton} onPress={() => router.push('/registers/driverRegisterStep4')}>
+          <MaterialIcons name="photo-camera" size={20} color="#FFFFFF" />
+          <Text style={styles.takePhotoButtonText}>Chụp ảnh</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F9FAFB',
-    },
-
-    // Header
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        backgroundColor: '#FFFFFF',
-        borderBottomWidth: 1,
-        borderBottomColor: '#F3F4F6',
-    },
-    backButton: {
-        width: 40,
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    headerTitle: {
-        fontSize: 18,
-        fontWeight: '700',
-        color: '#1F2937',
-        flex: 1,
-        textAlign: 'center',
-    },
-    headerSpacer: {
-        width: 40,
-    },
-
-    // Progress Steps
-    stepsContainer: {
-        paddingHorizontal: 16,
-        paddingVertical: 24,
-        backgroundColor: '#F9FAFB',
-    },
-    stepsLine: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    stepWrapper: {
-        alignItems: 'center',
-    },
-    stepCircle: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: '#E5E7EB',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 8,
-    },
-    stepCircleActive: {
-        backgroundColor: '#FF6B35',
-    },
-    stepCircleCompleted: {
-        backgroundColor: '#FF6B35',
-    },
-    stepNumber: {
-        fontSize: 16,
-        fontWeight: '700',
-        color: '#9CA3AF',
-    },
-    stepNumberActive: {
-        color: '#FFFFFF',
-    },
-    stepLabel: {
-        fontSize: 11,
-        fontWeight: '600',
-        color: '#9CA3AF',
-    },
-    stepLabelActive: {
-        color: '#FF6B35',
-    },
-    stepConnector: {
-        flex: 1,
-        height: 2,
-        backgroundColor: '#E5E7EB',
-        marginHorizontal: 4,
-        marginBottom: 32,
-    },
-    stepConnectorActive: {
-        backgroundColor: '#FF6B35',
-    },
-
-    // Content
-    content: {
-        flex: 1,
-    },
-    scrollContent: {
-        paddingHorizontal: 24,
-        paddingBottom: 100,
-    },
-    formTitle: {
-        fontSize: 28,
-        fontWeight: '700',
-        color: '#1F2937',
-        marginBottom: 8,
-    },
-    formSubtitle: {
-        fontSize: 14,
-        color: '#6B7280',
-        marginBottom: 40,
-    },
-
-    // Camera Section
-    cameraSection: {
-        alignItems: 'center',
-        marginBottom: 40,
-    },
-    cameraOuterCircle: {
-        width: 280,
-        height: 280,
-        borderRadius: 140,
-        borderWidth: 3,
-        borderColor: '#FED7AA',
-        borderStyle: 'dashed',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 16,
-    },
-    cameraInnerCircle: {
-        width: 240,
-        height: 240,
-        borderRadius: 120,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    cameraButton: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        backgroundColor: '#FFF7ED',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    cameraLabel: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#FF6B35',
-    },
-
-    // Requirements
-    requirementsContainer: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16,
-        padding: 20,
-        marginBottom: 24,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 4,
-        elevation: 2,
-    },
-    requirementsTitle: {
-        fontSize: 14,
-        fontWeight: '700',
-        color: '#1F2937',
-        letterSpacing: 0.5,
-        marginBottom: 16,
-    },
-    requirementItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 16,
-    },
-    requirementCheckmark: {
-        width: 24,
-        height: 24,
-        borderRadius: 12,
-        backgroundColor: '#10B981',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 12,
-    },
-    requirementCheckmarkIcon: {
-        fontSize: 14,
-        color: '#FFFFFF',
-        fontWeight: '700',
-    },
-    requirementText: {
-        flex: 1,
-        fontSize: 15,
-        color: '#1F2937',
-    },
-
-    // Help Container
-    helpContainer: {
-        alignItems: 'center',
-        marginBottom: 24,
-    },
-    helpText: {
-        fontSize: 15,
-        color: '#6B7280',
-        marginBottom: 8,
-        textAlign: 'center',
-    },
-    helpLink: {
-        fontSize: 15,
-        color: '#FF6B35',
-        fontWeight: '700',
-    },
-
-    // Take Photo Button
-    bottomButtonContainer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        padding: 16,
-        backgroundColor: '#FFFFFF',
-        borderTopWidth: 1,
-        borderTopColor: '#F3F4F6',
-    },
-    takePhotoButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 56,
-        backgroundColor: '#FF6B35',
-        borderRadius: 12,
-    },
-    takePhotoIcon: {
-        marginRight: 8,
-    },
-    takePhotoButtonText: {
-        fontSize: 18,
-        fontWeight: '700',
-        color: '#FFFFFF',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#F8F6F5',
+  },
+  header: {
+    height: 60,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E6DFDB',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#181311',
+  },
+  content: {
+    paddingHorizontal: 16,
+    paddingBottom: 120,
+    flexGrow: 1,
+  },
+  progressWrap: {
+    marginTop: 20,
+    marginBottom: 18,
+  },
+  progressLineBg: {
+    position: 'absolute',
+    top: 16,
+    left: 0,
+    right: 0,
+    height: 4,
+    backgroundColor: '#E6DFDB',
+    borderRadius: 99,
+  },
+  progressLineActive: {
+    position: 'absolute',
+    top: 16,
+    left: 0,
+    width: '72%',
+    height: 4,
+    backgroundColor: '#F2590D',
+    borderRadius: 99,
+  },
+  stepRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  stepItem: {
+    alignItems: 'center',
+    width: '24%',
+  },
+  stepCircle: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#E6DFDB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 6,
+  },
+  stepCircleActive: {
+    backgroundColor: '#F2590D',
+  },
+  stepCircleCurrent: {
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
+  },
+  stepCircleText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#8A6E60',
+  },
+  stepCircleTextActive: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  stepText: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: '#8A6E60',
+    textAlign: 'center',
+  },
+  stepTextActive: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: Colors.primary,
+    textAlign: 'center',
+  },
+  formSection: {
+    gap: 18,
+    flex: 1,
+  },
+  formTitle: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#181311',
+  },
+  formSubtitle: {
+    marginTop: -10,
+    fontSize: 14,
+    color: '#8A6E60',
+  },
+  cameraArea: {
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  cameraRing: {
+    width: 258,
+    height: 258,
+    borderRadius: 129,
+    borderWidth: 4,
+    borderStyle: 'dashed',
+    borderColor: '#F7C8AD',
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  cameraInner: {
+    alignItems: 'center',
+    gap: 12,
+  },
+  cameraIconWrap: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#FEE9DE',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cameraText: {
+    color: Colors.primary,
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  cameraOverlay: {
+    position: 'absolute',
+    top: 14,
+    left: 14,
+    right: 14,
+    bottom: 14,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: '#FCE2D3',
+  },
+  requirementCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E6DFDB',
+    padding: 18,
+    gap: 14,
+  },
+  requirementTitle: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#181311',
+    letterSpacing: 0.5,
+  },
+  requirementItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  requirementCheck: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#DCFCE7',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  requirementText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#181311',
+    fontWeight: '500',
+  },
+  bottomHint: {
+    alignItems: 'center',
+    marginTop: 22,
+    marginBottom: 12,
+  },
+  bottomHintText: {
+    fontSize: 13,
+    color: '#8A6E60',
+    textAlign: 'center',
+  },
+  bottomHintLink: {
+    marginTop: 4,
+    fontSize: 13,
+    color: Colors.primary,
+    fontWeight: '700',
+  },
+  footer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    padding: 14,
+    borderTopWidth: 1,
+    borderTopColor: '#E6DFDB',
+    backgroundColor: '#FFFFFF',
+  },
+  takePhotoButton: {
+    height: ButtonHeights.xl,
+    borderRadius: BorderRadius.lg,
+    backgroundColor: Colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 8,
+  },
+  takePhotoButtonText: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: Colors.white,
+  },
 });
