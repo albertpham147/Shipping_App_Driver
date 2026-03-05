@@ -51,21 +51,8 @@ export default function DriverProfileScreen() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.switchModeBtn} onPress={() => router.replace('/(tabs)')}>
-            <View style={styles.menuLeft}>
-              <View style={styles.switchIconWrap}>
-                <MaterialIcons name="person-pin" size={22} color="#F2590D" />
-              </View>
-              <View>
-                <Text style={styles.switchTitle}>Chuyển sang chế độ Khách hàng</Text>
-                <Text style={styles.switchSub}>Sử dụng dịch vụ đặt xe và giao hàng</Text>
-              </View>
-            </View>
-            <MaterialIcons name="sync" size={20} color="#F2590D" />
-          </TouchableOpacity>
-
           <View style={styles.logoutWrap}>
-            <TouchableOpacity style={styles.logoutBtn}>
+            <TouchableOpacity style={styles.logoutBtn} onPress={() => router.replace('/driverLogin')}>
               <MaterialIcons name="logout" size={22} color="#F2590D" />
               <Text style={styles.logoutText}>Đăng xuất</Text>
             </TouchableOpacity>
@@ -172,21 +159,6 @@ const styles = StyleSheet.create({
   menuLeft: { flexDirection: 'row', alignItems: 'center', gap: 10, flex: 1 },
   menuIconWrap: { width: 40, height: 40, borderRadius: 10, backgroundColor: '#FFF7ED', alignItems: 'center', justifyContent: 'center' },
   menuLabel: { fontSize: 14, fontWeight: '600', color: '#181311' },
-
-  switchModeBtn: {
-    backgroundColor: '#FFFFFF',
-    borderWidth: 2,
-    borderColor: 'rgba(242,89,13,0.16)',
-    borderRadius: 16,
-    padding: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 10,
-  },
-  switchIconWrap: { width: 40, height: 40, borderRadius: 10, backgroundColor: '#FFF0E6', alignItems: 'center', justifyContent: 'center' },
-  switchTitle: { fontSize: 14, fontWeight: '700', color: '#F2590D' },
-  switchSub: { marginTop: 2, fontSize: 10, color: '#6B7280' },
 
   logoutWrap: { paddingTop: 8, alignItems: 'center' },
   logoutBtn: { flexDirection: 'row', alignItems: 'center', gap: 6 },

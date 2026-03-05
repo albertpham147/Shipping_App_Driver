@@ -40,7 +40,7 @@ export default function SplashScreen() {
     pulseLoop.start();
 
     const timeout = setTimeout(() => {
-      router.replace('/customerLogin');
+      router.replace('/driverLogin');
     }, __DEV__ ? 500 : 2200);
 
     return () => {
