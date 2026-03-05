@@ -1,301 +1,282 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 
-import Fontisto from '@expo/vector-icons/Fontisto';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import AntDesign from '@expo/vector-icons/AntDesign';
 
-import googleImage from '@/assets/icons/google.png';
-import facebookImage from '@/assets/icons/facebook.png';
-
-
-export default function DriverLogin() {
+export default function DriverLoginScreen() {
+  const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const router = useRouter();
-
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Logo Section */}
-          <View style={styles.logoSection}>
-            <View style={styles.logoCircle}>
-              <Fontisto name="motorcycle" size={60} color="white" />
-            </View>
-            <Text style={styles.title}>Đăng nhập Tài xế</Text>
-            <Text style={styles.subtitle}>
-              Chào mừng bạn trở lại với App Shipping
-            </Text>
-          </View>
-
-          {/* Form Section */}
-          <View style={styles.formSection}>
-            {/* Phone Number Input */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Số điện thoại</Text>
-              <View style={styles.inputContainer}>
-                <FontAwesome name="phone" size={24} color="black" style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Nhập số điện thoại của bạn"
-                  placeholderTextColor="#9CA3AF"
-                  value={phoneNumber}
-                  onChangeText={setPhoneNumber}
-                  keyboardType="phone-pad"
-                />
+    <SafeAreaView style={styles.page}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.flex}>
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+          <View style={styles.card}>
+            <View style={styles.logoWrap}>
+              <View style={styles.logoCircle}>
+                <FontAwesome6 name="motorcycle" size={36} color="#FFFFFF" />
               </View>
+              <Text style={styles.title}>Đăng nhập Tài xế</Text>
+              <Text style={styles.subtitle}>Chào mừng bạn trở lại với App Shipping</Text>
             </View>
 
-            {/* Password Input */}
-            <View style={styles.inputGroup}>
-              <View style={styles.labelRow}>
-                <Text style={styles.label}>Mật khẩu</Text>
-                <TouchableOpacity>
-                  <Text style={styles.forgotPassword}>Quên mật khẩu?</Text>
-                </TouchableOpacity>
+            <View style={styles.formArea}>
+              <View style={styles.field}>
+                <Text style={styles.label}>Số điện thoại</Text>
+                <View style={styles.inputWrap}>
+                  <FontAwesome name="phone" size={18} color="#9CA3AF" style={styles.leftIcon} />
+                  <TextInput
+                    value={phoneNumber}
+                    onChangeText={setPhoneNumber}
+                    placeholder="Nhập số điện thoại của bạn"
+                    placeholderTextColor="#9CA3AF"
+                    keyboardType="phone-pad"
+                    style={styles.input}
+                  />
+                </View>
               </View>
-              <View style={styles.inputContainer}>
-                <FontAwesome name="lock" size={24} color="black" style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Nhập mật khẩu"
-                  placeholderTextColor="#9CA3AF"
-                  value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry={!showPassword}
-                />
-                <TouchableOpacity
-                  style={styles.eyeButton}
-                  onPress={() => setShowPassword(!showPassword)}>
-                  <MaterialCommunityIcons name={showPassword ? 'eye' : 'eye-closed'} size={24} color="black" />
-                </TouchableOpacity>
+
+              <View style={styles.field}>
+                <View style={styles.fieldHeader}>
+                  <Text style={styles.label}>Mật khẩu</Text>
+                  <TouchableOpacity>
+                    <Text style={styles.forgot}>Quên mật khẩu?</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.inputWrap}>
+                  <MaterialCommunityIcons name="lock-outline" size={19} color="#9CA3AF" style={styles.leftIcon} />
+                  <TextInput
+                    value={password}
+                    onChangeText={setPassword}
+                    placeholder="Nhập mật khẩu"
+                    placeholderTextColor="#9CA3AF"
+                    secureTextEntry={!showPassword}
+                    style={styles.input}
+                  />
+                  <TouchableOpacity onPress={() => setShowPassword((prev) => !prev)} style={styles.rightIconButton}>
+                    <MaterialCommunityIcons
+                      name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                      size={20}
+                      color="#9CA3AF"
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
+
+              <TouchableOpacity style={styles.loginButton} onPress={() => router.replace('/driverHome')}>
+                <Text style={styles.loginButtonText}>Đăng nhập</Text>
+              </TouchableOpacity>
             </View>
 
-            {/* Login Button */}
-            <TouchableOpacity style={styles.loginButton}>
-              <Text style={styles.loginButtonText}>Đăng nhập</Text>
+            <View style={styles.dividerRow}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>Hoặc đăng nhập với</Text>
+              <View style={styles.dividerLine} />
+            </View>
+
+            <View style={styles.socialRow}>
+              <TouchableOpacity style={styles.socialButton}>
+                <FontAwesome name="facebook-square" size={26} color="#1877F2" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.socialButton}>
+                <FontAwesome name="google" size={24} color="#EA4335" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.socialButton}>
+                <FontAwesome name="apple" size={24} color="#111111" />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.footer}>
+              <Text style={styles.footerText}>Bạn chưa có tài khoản?</Text>
+              <TouchableOpacity onPress={() => router.push('/registers/driverRegisterStep1')}>
+                <Text style={styles.footerLink}>Đăng ký ngay</Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity style={styles.customerButton} onPress={() => router.push('/profiles/customerProfile')}>
+              <Text style={styles.customerButtonText}>Quay về profile customer</Text>
             </TouchableOpacity>
-
-            {/* Divider */}
-            <Text style={styles.divider}>HOẶC ĐĂNG NHẬP VỚI</Text>
-
-            {/* Social Login Buttons */}
-            <View style={styles.socialButtons}>
-              <TouchableOpacity style={styles.socialButton}>
-                <Image source={facebookImage} style={styles.facebookIcon} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.socialButton}>
-                <Image source={googleImage} style={styles.googleIcon} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.socialButton}>
-                <AntDesign name="apple" size={30} color="black" style={styles.appleIcon} />
-              </TouchableOpacity>
-            </View>
-
-            {/* Sign Up Link */}
-            <View style={styles.signupContainer}>
-              <Text style={styles.signupText}>Bạn chưa có tài khoản? </Text>
-              <TouchableOpacity onPress={() => { router.push('/registers/driverRegisterStep1') }}>
-                <Text style={styles.signupLink}>Đăng ký ngay</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
+  page: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#F8F6F5',
   },
-  keyboardView: {
+  flex: {
     flex: 1,
   },
   scrollContent: {
     flexGrow: 1,
-    paddingHorizontal: 24,
     justifyContent: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 20,
   },
-
-  // Logo Section
-  logoSection: {
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 36,
+    paddingHorizontal: 24,
+    paddingVertical: 28,
+  },
+  logoWrap: {
     alignItems: 'center',
-    marginBottom: 48,
+    marginBottom: 28,
   },
   logoCircle: {
-    width: 120,
-    height: 120,
-    backgroundColor: '#FF6B35',
-    borderRadius: 60,
-    justifyContent: 'center',
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#F2590D',
     alignItems: 'center',
-    marginBottom: 24,
-    shadowColor: '#FF6B35',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 16,
-    elevation: 8,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#1F2937',
-    marginBottom: 12,
-  },
-  subtitle: {
-    fontSize: 15,
-    color: '#9CA3AF',
-    textAlign: 'center',
-  },
-
-  // Form Section
-  formSection: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 24,
-    padding: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    elevation: 5,
-  },
-  inputGroup: {
+    justifyContent: 'center',
     marginBottom: 20,
   },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1F2937',
-    marginBottom: 8,
+  title: {
+    fontSize: 27,
+    fontWeight: '700',
+    color: '#181311',
   },
-  labelRow: {
+  subtitle: {
+    marginTop: 8,
+    fontSize: 14,
+    color: '#6B7280',
+  },
+  formArea: {
+    gap: 16,
+  },
+  field: {
+    gap: 8,
+  },
+  fieldHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
   },
-  forgotPassword: {
+  label: {
     fontSize: 14,
-    color: '#FF6B35',
+    fontWeight: '600',
+    color: '#181311',
+  },
+  forgot: {
+    fontSize: 12,
+    color: '#F2590D',
     fontWeight: '600',
   },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  inputWrap: {
     height: 56,
-    backgroundColor: '#F9FAFB',
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: '#E5E7EB',
-    borderRadius: 12,
-    paddingHorizontal: 16,
+    backgroundColor: '#FFFFFF',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
   },
-  inputIcon: {
-    marginRight: 12,
+  leftIcon: {
+    marginRight: 10,
+  },
+  rightIconButton: {
+    padding: 4,
   },
   input: {
     flex: 1,
     fontSize: 16,
-    color: '#1F2937',
+    color: '#181311',
   },
-  eyeButton: {
-    padding: 8,
-  },
-  eyeIcon: {
-    fontSize: 20,
-  },
-
-  // Login Button
   loginButton: {
+    marginTop: 4,
     height: 56,
-    backgroundColor: '#FF6B35',
-    borderRadius: 12,
-    justifyContent: 'center',
+    borderRadius: 16,
     alignItems: 'center',
-    marginTop: 8,
-    marginBottom: 24,
-    shadowColor: '#FF6B35',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
+    justifyContent: 'center',
+    backgroundColor: '#F2590D',
   },
   loginButtonText: {
     fontSize: 18,
     fontWeight: '700',
     color: '#FFFFFF',
   },
-
-  // Divider
-  divider: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#9CA3AF',
-    textAlign: 'center',
+  dividerRow: {
+    marginTop: 30,
     marginBottom: 24,
-    letterSpacing: 0.5,
-  },
-
-  // Social Buttons
-  socialButtons: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 16,
-    marginBottom: 32,
+    alignItems: 'center',
+    gap: 10,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#ECECEC',
+  },
+  dividerText: {
+    fontSize: 12,
+    color: '#9CA3AF',
+    fontWeight: '500',
+    textTransform: 'uppercase',
+  },
+  socialRow: {
+    flexDirection: 'row',
+    gap: 12,
   },
   socialButton: {
-    width: 64,
-    height: 64,
-    backgroundColor: '#F9FAFB',
+    flex: 1,
+    height: 56,
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
-    borderRadius: 32,
-    justifyContent: 'center',
+    borderColor: '#ECECEC',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
   },
-  facebookIcon: {
-    height: 30,
-    width: 30
-  },
-  googleIcon: {
-    height: 30,
-    width: 30
-  },
-  appleIcon: {
-    height: 30,
-    width: 30
-  },
-
-  // Sign Up
-  signupContainer: {
+  footer: {
+    marginTop: 30,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
   },
-  signupText: {
-    fontSize: 15,
+  footerText: {
+    fontSize: 14,
     color: '#6B7280',
   },
-  signupLink: {
-    fontSize: 15,
-    color: '#FF6B35',
+  footerLink: {
+    fontSize: 14,
     fontWeight: '700',
+    color: '#F2590D',
+  },
+  customerButton: {
+    marginTop: 12,
+    height: 46,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#F6D5C3',
+    backgroundColor: '#FFF7F2',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  customerButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#C85313',
   },
 });
