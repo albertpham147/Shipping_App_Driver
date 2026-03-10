@@ -107,10 +107,6 @@ export default function DriverLoginScreen() {
                 <Text style={styles.footerLink}>Đăng ký ngay</Text>
               </TouchableOpacity>
             </View>
-
-            <TouchableOpacity style={styles.customerButton} onPress={() => router.push('/profiles/customerProfile')}>
-              <Text style={styles.customerButtonText}>Quay về profile customer</Text>
-            </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -263,20 +259,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
     color: '#F2590D',
-  },
-  customerButton: {
-    marginTop: 12,
-    height: 46,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#F6D5C3',
-    backgroundColor: '#FFF7F2',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  customerButtonText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#C85313',
   },
 });
